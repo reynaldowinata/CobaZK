@@ -1,14 +1,12 @@
-<grid 
-	hflex="1" vflex="1" sclass="sidebar" 
-	id="fnList" apply="org.zkoss.bind.BindComposer" 
+<grid hflex="1" vflex="1" sclass="sidebar" id="fnList" 
+	apply="org.zkoss.bind.BindComposer" 
 	viewModel="@id('vm') @init('vmd.SidebarAjaxBasedVmd')" 
 	model="@load(vm.sidebarPages)">
-
-	<columns>
-		<column width="36px"/>
-		<column />
-	</columns>
 	
+	<columns>
+		<column width="36px" />
+		<column />
+	</columns> 
 	<rows>
 		<template name="model">
 			<row sclass="sidebar-fn" 
