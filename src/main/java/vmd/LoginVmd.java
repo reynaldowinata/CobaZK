@@ -44,20 +44,6 @@ public class LoginVmd {
 		}
 	}
 	
-	
-	public String getUsername() {
-		return username;
-	}
-	public void setUsername(String username) {
-		this.username = username;
-	}
-	public String getPassword() {
-		return password;
-	}
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
 
 	public MstUserDto getMstUserDto() {
 		return mstUserDto;
@@ -66,6 +52,26 @@ public class LoginVmd {
 
 	public void setMstUserDto(MstUserDto mstUserDto) {
 		this.mstUserDto = mstUserDto;
+	}
+
+
+	public String getUsername() {
+		return username;
+	}
+
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+
+	public String getPassword() {
+		return password;
+	}
+
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 	
 	
