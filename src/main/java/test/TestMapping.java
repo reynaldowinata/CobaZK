@@ -20,7 +20,7 @@ public class TestMapping {
 		mstDeptDto.setCreatedUser("ADMIN");
 		mstDeptDto.setDeleted(false);
 		mstDeptDto.setDeptName("DIVISI FINANCE");
-		mstDeptDto.setId(8);
+		mstDeptDto.setId(1);
 		mstDepartmentSvc.save(mstDeptDto);
 		
 		MstDepartmentDto deptLastInsert = mstDepartmentSvc.getLastInserted();

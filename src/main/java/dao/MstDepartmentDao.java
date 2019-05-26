@@ -2,6 +2,7 @@ package dao;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import entity.MstDepartment;
 import entity.pk.MstDepartmentPk;
@@ -9,6 +10,8 @@ import entity.pk.MstDepartmentPk;
 public interface MstDepartmentDao extends 
 		JpaRepository<MstDepartment, MstDepartmentPk>,
 		MstDepartmentCustomDao{
-
+	
+	@Query(value="SELECT p FROM MstDepartment p WHERE p.deptName = :deptName")
+	public MstDepartment findByDeptName(@Param("deptName") String deptName);
 	
 }

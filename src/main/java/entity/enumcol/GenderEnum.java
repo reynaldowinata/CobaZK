@@ -1,4 +1,4 @@
-package entity;
+package entity.enumcol;
 
 public enum GenderEnum {
 	

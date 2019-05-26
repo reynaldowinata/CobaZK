@@ -90,7 +90,28 @@ public class MstDepartmentServiceImpl implements MstDepartmentService {
 		}
 		return mstDeptDto;
 	}
-	
-	
 
+	@Override
+	public MstDepartmentDto findByDeptName(String deptName) {
+		MstDepartmentDto dto = null;
+
+		try {
+			MstDepartment dept = mstDepartmentDao.findByDeptName(deptName);
+			if(dept != null){
+				dto = new MstDepartmentDto();
+				dto.setCreatedDate(dept.getCreatedDate());
+				dto.setCreatedUser(dept.getCreatedUser());
+				dto.setDeleted(dept.getDeleted());
+				dto.setDeptName(dept.getDeptName());
+				dto.setId(dept.getId());
+				dto.setUpdatedDate(dept.getUpdatedDate());
+				dto.setUpdatedUser(dept.getUpdatedUser());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			dto = null;
+		}
+		return dto;
+	}
+	
 }

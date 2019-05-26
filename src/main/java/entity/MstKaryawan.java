@@ -2,6 +2,7 @@ package entity;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,6 +16,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 import component.BaseEntity;
+import entity.enumcol.GenderEnum;
 import entity.pk.MstKaryawanPk;
 
 @Entity
@@ -37,7 +39,7 @@ public class MstKaryawan extends BaseEntity implements Serializable{
 	private String namaKaryawan;
 	
 	@Column(name="date_of_birth")
-	private LocalDateTime dateOfBirth;
+	private Date dateOfBirth;
 	
 	@Column(name="gender")
 	private GenderEnum gender;
@@ -63,11 +65,11 @@ public class MstKaryawan extends BaseEntity implements Serializable{
 		this.namaKaryawan = namaKaryawan;
 	}
 
-	public LocalDateTime getDateOfBirth() {
+	public Date getDateOfBirth() {
 		return dateOfBirth;
 	}
 
-	public void setDateOfBirth(LocalDateTime dateOfBirth) {
+	public void setDateOfBirth(Date dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
 	}
 

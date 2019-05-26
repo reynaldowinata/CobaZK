@@ -9,5 +9,6 @@ public interface MstDepartmentService {
 	public void save(MstDepartmentDto mstDepartmentDto);
 	public List<MstDepartmentDto> findAll();
 	public MstDepartmentDto getLastInserted();
+	public MstDepartmentDto findByDeptName(String deptName);
 
 }

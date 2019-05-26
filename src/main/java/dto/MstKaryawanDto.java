@@ -5,8 +5,9 @@ import java.util.Date;
 
 
 
-import entity.GenderEnum;
+
 import entity.MstDepartment;
+import entity.enumcol.GenderEnum;
 
 public class MstKaryawanDto {
 	
@@ -16,9 +17,9 @@ public class MstKaryawanDto {
 	private String updatedUser;
 	private Boolean deleted = false;
 	
-	private String id;
+	private Integer id;
 	private String namaKaryawan;
-	private LocalDateTime dateOfBirth;
+	private Date dateOfBirth;
 	private MstDepartment department;
 	private GenderEnum gender;
 	
@@ -54,10 +55,10 @@ public class MstKaryawanDto {
 	public void setDeleted(Boolean deleted) {
 		this.deleted = deleted;
 	}
-	public String getId() {
+	public Integer getId() {
 		return id;
 	}
-	public void setId(String id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 	public String getNamaKaryawan() {
@@ -66,10 +67,10 @@ public class MstKaryawanDto {
 	public void setNamaKaryawan(String namaKaryawan) {
 		this.namaKaryawan = namaKaryawan;
 	}
-	public LocalDateTime getDateOfBirth() {
+	public Date getDateOfBirth() {
 		return dateOfBirth;
 	}
-	public void setDateOfBirth(LocalDateTime dateOfBirth) {
+	public void setDateOfBirth(Date dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
 	}
 	public MstDepartment getDepartment() {
