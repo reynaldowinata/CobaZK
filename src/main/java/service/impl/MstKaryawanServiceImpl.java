@@ -41,6 +41,7 @@ public class MstKaryawanServiceImpl implements MstKaryawanService{
 			mstKaryawan.setUpdatedUser(mstKaryawanDto.getUpdatedUser());
 			mstKaryawan.setGender(mstKaryawanDto.getGender());
 			mstKaryawan.setId(mstKaryawanDto.getId());
+			mstKaryawan.setBirthPlace(mstKaryawanDto.getBirthPlace());
 			mstKaryawanDao.save(mstKaryawan);
 			
 		} catch (Exception e) {
@@ -68,7 +69,7 @@ public class MstKaryawanServiceImpl implements MstKaryawanService{
 					dto.setNamaKaryawan(karyawan.getNamaKaryawan());
 					dto.setUpdatedDate(karyawan.getUpdatedDate());
 					dto.setUpdatedUser(karyawan.getUpdatedUser());
-					
+					dto.setBirthPlace(karyawan.getBirthPlace());
 					list.add(dto);
 				}
 			}
@@ -116,6 +117,7 @@ public class MstKaryawanServiceImpl implements MstKaryawanService{
 				dto.setNamaKaryawan(karyawan.getNamaKaryawan());
 				dto.setUpdatedDate(karyawan.getUpdatedDate());
 				dto.setUpdatedUser(karyawan.getUpdatedUser());
+				dto.setBirthPlace(karyawan.getBirthPlace());
 			}
 			return dto;
 		} catch (Exception e) {
@@ -139,6 +141,7 @@ public class MstKaryawanServiceImpl implements MstKaryawanService{
 				karyawan.setDepartment(mstKaryawanDto.getDepartment());
 				karyawan.setGender(mstKaryawanDto.getGender());
 				karyawan.setNamaKaryawan(mstKaryawanDto.getNamaKaryawan());
+				karyawan.setBirthPlace(mstKaryawanDto.getBirthPlace());
 				mstKaryawanDao.save(karyawan);
 			}
 		} catch (Exception e) {

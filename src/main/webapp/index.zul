@@ -2,7 +2,7 @@
 <?init class="org.zkoss.zk.ui.util.Composition" arg0="/assets/themes/template.zul"?>
 <?init class="vmd.AuthCheckerVmd"?>
 
-<?page id="index" title="Penjualan" ?>
+<?page id="index" title="Simple ZK Application" ?>
 <zk>
 	<include id="mainInclude" mode="instant" self="@define(mainContent)"
 	apply="org.zkoss.bind.BindComposer"

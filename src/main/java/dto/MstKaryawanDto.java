@@ -22,7 +22,7 @@ public class MstKaryawanDto {
 	private Date dateOfBirth;
 	private MstDepartment department;
 	private GenderEnum gender;
-	
+	private String birthPlace;
 	
 
 	public Date getCreatedDate() {
@@ -84,6 +84,12 @@ public class MstKaryawanDto {
 	}
 	public void setGender(GenderEnum gender) {
 		this.gender = gender;
+	}
+	public String getBirthPlace() {
+		return birthPlace;
+	}
+	public void setBirthPlace(String birthPlace) {
+		this.birthPlace = birthPlace;
 	}
 	
 }

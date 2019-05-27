@@ -10,5 +10,6 @@ public interface MstDepartmentService {
 	public List<MstDepartmentDto> findAll();
 	public MstDepartmentDto getLastInserted();
 	public MstDepartmentDto findByDeptName(String deptName);
+	public List<MstDepartmentDto> findAllNotDeleted();
 
 }

@@ -113,5 +113,38 @@ public class MstDepartmentServiceImpl implements MstDepartmentService {
 		}
 		return dto;
 	}
+
+	@Override
+	public List<MstDepartmentDto> findAllNotDeleted() {
+List<MstDepartmentDto> list = null;
+		
+		try {
+			List<MstDepartment> results = mstDepartmentDao.findAllNotDeleted();
+			
+			if(results != null && !results.isEmpty() && results.size() > 0){
+				
+				list = new ArrayList<MstDepartmentDto>();
+				
+				for(MstDepartment dept : results){
+					MstDepartmentDto dto = new MstDepartmentDto();
+					dto.setCreatedDate(dept.getCreatedDate());
+					dto.setCreatedUser(dept.getCreatedUser());
+					dto.setDeleted(dept.getDeleted());
+					dto.setDeptName(dept.getDeptName());
+					dto.setId(dept.getId());
+					dto.setUpdatedDate(dept.getUpdatedDate());
+					dto.setUpdatedUser(dept.getUpdatedUser());
+					
+					list.add(dto);
+					
+				}
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return list;
+	}
 	
 }

@@ -9,7 +9,7 @@ public enum GenderEnum {
 	private String code;
 	
 	
-	private GenderEnum(String description, String code) {
+	private GenderEnum(String code, String description) {
 		this.description = description;
 		this.code = code;
 	}

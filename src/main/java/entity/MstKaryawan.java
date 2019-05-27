@@ -46,6 +46,9 @@ public class MstKaryawan extends BaseEntity implements Serializable{
 	
 	@ManyToOne
 	private MstDepartment department;
+	
+	@Column(name="birth_place")
+	private String birthPlace;
 
 	
 	public void setId(Integer id) {
@@ -87,6 +90,14 @@ public class MstKaryawan extends BaseEntity implements Serializable{
 
 	public void setGender(GenderEnum gender) {
 		this.gender = gender;
+	}
+
+	public String getBirthPlace() {
+		return birthPlace;
+	}
+
+	public void setBirthPlace(String birthPlace) {
+		this.birthPlace = birthPlace;
 	}
 	
 	
