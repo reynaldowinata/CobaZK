@@ -46,8 +46,10 @@ public class KaryawanEditVmd {
 	private String genderChoice;
 
 	@Init
+	@NotifyChange(value={"genderChoice"})
 	public void load(){
 		mstKaryawanDto = (MstKaryawanDto) Sessions.getCurrent().getAttribute("objKaryawan");
+		genderChoice = mstKaryawanDto.getGender() != null ? mstKaryawanDto.getGender().getCode() : "";
 		getAllDepartment();
 	}
 	

@@ -33,7 +33,7 @@
 				
 				<row>
 					<label value="Jenis Kelamin" />
-					<radiogroup id="rg2"  selectedItem="@bind(vm.genderChoice)">
+					<radiogroup id="rg2"  selectedItem="@bind(vm.genderChoice)" >
 							<radio radiogroup="rg2" value="M" label="Male" />
 							<radio radiogroup="rg2" value="F" label="Female" />
 					</radiogroup>
