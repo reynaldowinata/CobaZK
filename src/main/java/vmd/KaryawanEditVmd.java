@@ -15,11 +15,16 @@ import org.zkoss.zul.Include;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Window;
 
+import service.MstCityService;
 import service.MstDepartmentService;
-import service.MstKaryawanService;
+import service.MstEmployeeService;
+import service.MstProvinceService;
 import dao.MstDepartmentDao;
+import dto.MstCityDto;
 import dto.MstDepartmentDto;
-import dto.MstKaryawanDto;
+import dto.MstEmployeeDto;
+import dto.MstProductDto;
+import dto.MstProvinceDto;
 import entity.MstDepartment;
 import entity.enumcol.GenderEnum;
 import entity.pk.MstDepartmentPk;
@@ -28,7 +33,7 @@ import entity.pk.MstDepartmentPk;
 public class KaryawanEditVmd {
 	
 	@WireVariable
-	private MstKaryawanService mstKaryawanSvc;
+	private MstEmployeeService mstEmployeeSvc;
 	
 	@WireVariable
 	private MstDepartmentService mstDepartmentSvc;
@@ -36,43 +41,68 @@ public class KaryawanEditVmd {
 	@WireVariable
 	private MstDepartmentDao mstDepartmentDao;
 	
+	@WireVariable
+	private MstCityService mstCitySvc;
+	
+	@WireVariable
+	private MstProvinceService mstProvinceSvc;
+	
 	private MstDepartment mstDepartment;
 	
-	private MstKaryawanDto mstKaryawanDto = new MstKaryawanDto();
+	private List<MstCityDto> listCity = new ArrayList<MstCityDto>();
+	private List<MstProvinceDto> listProvince = new ArrayList<MstProvinceDto>();
+	private MstCityDto mstCityDto;
+	private MstProvinceDto mstProvinceDto;
+	
+	private MstEmployeeDto mstEmployeeDto = new MstEmployeeDto();
 	private GenderEnum gender;
 	private List<MstDepartmentDto> listDepartment = new ArrayList<MstDepartmentDto>();
 	private MstDepartmentDto mstDepartmentDto;
 	
 	private String genderChoice;
+	
+	private Messagebox msgBox = new Messagebox();
+	private String strMsg = "";
 
 	@Init
-	@NotifyChange(value={"genderChoice"})
+	@NotifyChange(value={"genderChoice", "listProvince", "mstProvinceDto","mstCityDto"})
 	public void load(){
-		mstKaryawanDto = (MstKaryawanDto) Sessions.getCurrent().getAttribute("objKaryawan");
-		genderChoice = mstKaryawanDto.getGender() != null ? mstKaryawanDto.getGender().getCode() : "";
+		mstEmployeeDto = (MstEmployeeDto) Sessions.getCurrent().getAttribute("objKaryawan");
+		
+		if(mstEmployeeDto != null && mstEmployeeDto.getId() !=  null){
+			mstCityDto = mstCitySvc.findByCityCode(mstEmployeeDto.getCityCode());
+			mstProvinceDto = mstProvinceSvc.findOneByProvCode(mstEmployeeDto.getProvinceCode());
+		}
+		else{
+			mstEmployeeDto = new MstEmployeeDto();
+			mstCityDto = new MstCityDto();
+			mstProvinceDto = new MstProvinceDto();
+		}
+		genderChoice = mstEmployeeDto.getGender() != null ? mstEmployeeDto.getGender().getCode() : "";
 		getAllDepartment();
+		getAllProvince();
 	}
 	
 	@Command(value="save")
 	public void save(){
-		MstKaryawanDto mstKaryawanFindOne = new MstKaryawanDto();
-		mstKaryawanFindOne = mstKaryawanSvc.findOne(mstKaryawanDto);
+		MstEmployeeDto mstKaryawanFindOne = new MstEmployeeDto();
+		mstKaryawanFindOne = mstEmployeeSvc.findOne(mstEmployeeDto);
 		
 		if(mstKaryawanFindOne != null && mstKaryawanFindOne.getId() != null){
 			MstDepartmentPk deptPk = new MstDepartmentPk();
 			deptPk.setId(mstDepartmentDto.getId());
 			mstDepartment = mstDepartmentDao.findOne(deptPk);
 			
-			mstKaryawanDto.setDepartment(mstDepartment);
+			mstEmployeeDto.setDepartment(mstDepartment);
 			gender = genderChoice.equalsIgnoreCase("M")? GenderEnum.MALE : GenderEnum.FEMALE;
-			mstKaryawanDto.setGender(gender);
-			mstKaryawanSvc.update(mstKaryawanDto);
+			mstEmployeeDto.setGender(gender);
+			mstEmployeeSvc.update(mstEmployeeDto);
 			Clients.showNotification("Data berhasil diupdate", Clients.NOTIFICATION_TYPE_INFO, null, null, 1500);
 			Include inc = (Include) Executions.getCurrent().getDesktop().getPage("index").getFellow("mainInclude");
 			inc.setSrc("/master/karyawan/karyawan.zul");
 		}
 		else{
-			mstKaryawanSvc.save(mstKaryawanDto);
+			mstEmployeeSvc.save(mstEmployeeDto);
 			Clients.showNotification("Data berhasil disimpan", Clients.NOTIFICATION_TYPE_INFO, null, null, 1500);
 			Include inc = (Include) Executions.getCurrent().getDesktop().getPage("index").getFellow("mainInclude");
 			inc.setSrc("/master/karyawan/karyawan.zul");
@@ -85,7 +115,11 @@ public class KaryawanEditVmd {
 		inc.setSrc("/master/karyawan/karyawan.zul");
 	}
 	
-	
+	@Command(value="findCity")
+	@NotifyChange(value={"listCity","mstCityDto"})
+	public void findCity(){
+		listCity = mstCitySvc.findByProvCode(mstProvinceDto.getProvinceCode());
+	}
 	
 	private void getAllDepartment(){
 		if(mstDepartmentSvc.findAllNotDeleted() != null 
@@ -98,14 +132,25 @@ public class KaryawanEditVmd {
 		}
 	}
 	
+	private void getAllProvince(){
+		if(mstProvinceSvc.findAllDeletedFalse().size() > 0  
+				&& mstProvinceSvc.findAllDeletedFalse() != null 
+				&& mstProvinceSvc.findAllDeletedFalse().size() > 0){
+			listProvince = mstProvinceSvc.findAllDeletedFalse();
+		}
+		else{
+			Messagebox.show("Tidak ada data Provinsi yang bisa ditampilkan.");
+		}
+	}
+	
 	/* ----- Setter Getter ----- */
 	
-	public MstKaryawanDto getMstKaryawanDto() {
-		return mstKaryawanDto;
+	public MstEmployeeDto getMstKaryawanDto() {
+		return mstEmployeeDto;
 	}
 
-	public void setMstKaryawanDto(MstKaryawanDto mstKaryawanDto) {
-		this.mstKaryawanDto = mstKaryawanDto;
+	public void setMstKaryawanDto(MstEmployeeDto mstKaryawanDto) {
+		this.mstEmployeeDto = mstKaryawanDto;
 	}
 
 	public GenderEnum getGender() {
@@ -146,6 +191,38 @@ public class KaryawanEditVmd {
 
 	public void setGenderChoice(String genderChoice) {
 		this.genderChoice = genderChoice;
+	}
+
+	public List<MstCityDto> getListCity() {
+		return listCity;
+	}
+
+	public void setListCity(List<MstCityDto> listCity) {
+		this.listCity = listCity;
+	}
+
+	public List<MstProvinceDto> getListProvince() {
+		return listProvince;
+	}
+
+	public void setListProvince(List<MstProvinceDto> listProvince) {
+		this.listProvince = listProvince;
+	}
+
+	public MstCityDto getMstCityDto() {
+		return mstCityDto;
+	}
+
+	public void setMstCityDto(MstCityDto mstCityDto) {
+		this.mstCityDto = mstCityDto;
+	}
+
+	public MstProvinceDto getMstProvinceDto() {
+		return mstProvinceDto;
+	}
+
+	public void setMstProvinceDto(MstProvinceDto mstProvinceDto) {
+		this.mstProvinceDto = mstProvinceDto;
 	}
 	
 }

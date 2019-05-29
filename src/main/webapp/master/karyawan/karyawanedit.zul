@@ -27,8 +27,8 @@
 				</row>
 				
 				<row>
-					<label value="Nama Karyawan" />
-					<textbox constraint="no empty : harus diisi" value="@bind(vm.mstKaryawanDto.namaKaryawan)" />
+					<label value="Employee Name" />
+					<textbox constraint="no empty : harus diisi" value="@bind(vm.mstKaryawanDto.employeeName)" />
 				</row>
 				
 				<row>
@@ -40,13 +40,13 @@
 				</row>
 				
 				<row>
-					<label value=" Tanggal Lahir" />
+					<label value=" Date of Birth" />
 					<datebox constraint="no empty : harus diisi" 
 							value="@bind(vm.mstKaryawanDto.dateOfBirth)" />
 				</row>
 				
 				<row>
-					<label value="Tempat Lahir" />
+					<label value="Birth Place" />
 					<textbox constraint="no empty : harus diisi" value="@bind(vm.mstKaryawanDto.birthPlace)" />
 				</row>
 				
@@ -62,6 +62,39 @@
 						</template>
 					</combobox>
 				</row>
+				
+				<row>
+					<label value="Province" />
+					<combobox constraint="no empty : harus diisi" 
+						model="@load(vm.listProvince)" selectedItem="@save(vm.mstProvinceDto)" 
+						value="@load(vm.mstProvinceDto.provinceName)" onSelect="@command('findCity')" >
+						<template name="model">
+							<comboitem label="@load(each.provinceName)" value="@load(each.provinceCode)" />
+						</template>
+					</combobox>
+				</row>
+				
+				<row>
+					<label value="City" />
+					<combobox constraint="no empty : harus diisi" model="@load(vm.listCity)" 
+						selectedItem="@save(vm.mstCityDto)" value="@load(vm.mstCityDto.cityName)" 
+						disabled="@load(vm.mstProvinceDto.provinceCode eq null ? true : false)">
+							<template name="model">
+									<comboitem label="@load(each.cityName)" value="@load(each.cityCode)" />
+							</template>
+					</combobox>
+				</row>
+				
+				<row>
+					<label value="Address" />
+					<textbox constraint="no empty : harus diisi" value="@bind(vm.mstKaryawanDto.address)" />
+				</row>
+				
+				<row>
+					<label value="Postal Code" />
+					<textbox constraint="no empty : harus diisi" value="@bind(vm.mstKaryawanDto.postalCode)" />
+				</row>
+				
 			</rows>
 		</grid>
 	

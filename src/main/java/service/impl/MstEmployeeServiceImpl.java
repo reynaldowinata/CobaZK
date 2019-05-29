@@ -11,38 +11,42 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import dao.MstDepartmentDao;
-import dao.MstKaryawanDao;
-import dto.MstKaryawanDto;
-import entity.MstKaryawan;
-import entity.pk.MstKaryawanPk;
-import service.MstKaryawanService;
+import dao.MstEmployeeDao;
+import dto.MstEmployeeDto;
+import entity.MstEmployee;
+import entity.pk.MstEmployeePk;
+import service.MstEmployeeService;
 
-@Service(value="mstKaryawanSvc")
+@Service(value="mstEmployeeSvc")
 @Transactional
-public class MstKaryawanServiceImpl implements MstKaryawanService{
+public class MstEmployeeServiceImpl implements MstEmployeeService{
 
 	@Autowired
-	private MstKaryawanDao mstKaryawanDao;
+	private MstEmployeeDao mstEmployeeDao;
 	
 	@Autowired
 	private MstDepartmentDao mstDepartmentDao;
 	
 	@Override
-	public void save(MstKaryawanDto mstKaryawanDto) {
+	public void save(MstEmployeeDto mstKaryawanDto) {
 		try {
-			MstKaryawan mstKaryawan = new MstKaryawan();
+			MstEmployee mstKaryawan = new MstEmployee();
 			mstKaryawan.setCreatedDate(mstKaryawanDto.getCreatedDate());
 			mstKaryawan.setCreatedUser(mstKaryawanDto.getCreatedUser());
 			mstKaryawan.setDateOfBirth(mstKaryawanDto.getDateOfBirth());
 			mstKaryawan.setDeleted(mstKaryawanDto.getDeleted());
 			mstKaryawan.setDepartment(mstKaryawanDto.getDepartment());
-			mstKaryawan.setNamaKaryawan(mstKaryawanDto.getNamaKaryawan());
+			mstKaryawan.setEmployeeName(mstKaryawanDto.getEmployeeName());
 			mstKaryawan.setUpdatedDate(mstKaryawanDto.getUpdatedDate());
 			mstKaryawan.setUpdatedUser(mstKaryawanDto.getUpdatedUser());
 			mstKaryawan.setGender(mstKaryawanDto.getGender());
 			mstKaryawan.setId(mstKaryawanDto.getId());
 			mstKaryawan.setBirthPlace(mstKaryawanDto.getBirthPlace());
-			mstKaryawanDao.save(mstKaryawan);
+			mstKaryawan.setAddress(mstKaryawanDto.getAddress());
+			mstKaryawan.setCityCode(mstKaryawanDto.getCityCode());
+			mstKaryawan.setPostalCode(mstKaryawanDto.getPostalCode());
+			mstKaryawan.setProvinceCode(mstKaryawanDto.getProvinceCode());
+			mstEmployeeDao.save(mstKaryawan);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -50,15 +54,15 @@ public class MstKaryawanServiceImpl implements MstKaryawanService{
 	}
 
 	@Override
-	public List<MstKaryawanDto> findAll() {
-		List<MstKaryawanDto> list = null;
+	public List<MstEmployeeDto> findAll() {
+		List<MstEmployeeDto> list = null;
 		try {
-			List<MstKaryawan> res = mstKaryawanDao.findAll();
+			List<MstEmployee> res = mstEmployeeDao.findAll();
 			if(res != null && !res.isEmpty() && res.size() > 0){
-				list = new ArrayList<MstKaryawanDto>();
+				list = new ArrayList<MstEmployeeDto>();
 				
-				for(MstKaryawan karyawan : res){
-					MstKaryawanDto dto = new MstKaryawanDto();
+				for(MstEmployee karyawan : res){
+					MstEmployeeDto dto = new MstEmployeeDto();
 					dto.setCreatedDate(karyawan.getCreatedDate());
 					dto.setCreatedUser(karyawan.getCreatedUser());
 					dto.setDateOfBirth(karyawan.getDateOfBirth());
@@ -66,10 +70,15 @@ public class MstKaryawanServiceImpl implements MstKaryawanService{
 					dto.setDepartment(karyawan.getDepartment());
 					dto.setGender(karyawan.getGender());
 					dto.setId(karyawan.getId());
-					dto.setNamaKaryawan(karyawan.getNamaKaryawan());
+					dto.setEmployeeName(karyawan.getEmployeeName());
 					dto.setUpdatedDate(karyawan.getUpdatedDate());
 					dto.setUpdatedUser(karyawan.getUpdatedUser());
 					dto.setBirthPlace(karyawan.getBirthPlace());
+					dto.setAddress(karyawan.getAddress());
+					dto.setCityCode(karyawan.getCityCode());
+					dto.setPostalCode(karyawan.getPostalCode());
+					dto.setProvinceCode(karyawan.getProvinceCode());
+
 					list.add(dto);
 				}
 			}
@@ -81,17 +90,17 @@ public class MstKaryawanServiceImpl implements MstKaryawanService{
 	}
 
 	@Override
-	public void delete(MstKaryawanDto mstKaryawanDto) {
+	public void delete(MstEmployeeDto mstKaryawanDto) {
 		try {
-			MstKaryawanPk karyPk = new MstKaryawanPk();
+			MstEmployeePk karyPk = new MstEmployeePk();
 			karyPk.setId(mstKaryawanDto.getId());
 			
-			MstKaryawan karyawan = mstKaryawanDao.findOne(karyPk);
+			MstEmployee karyawan = mstEmployeeDao.findOne(karyPk);
 			if(karyawan != null && karyawan.getId() != null){
 				karyawan.setDeleted(true);
 				karyawan.setUpdatedDate(new Date());
 				karyawan.setUpdatedUser("ADMIN");
-				mstKaryawanDao.save(karyawan);
+				mstEmployeeDao.save(karyawan);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -99,14 +108,14 @@ public class MstKaryawanServiceImpl implements MstKaryawanService{
 	}
 
 	@Override
-	public MstKaryawanDto findOne(MstKaryawanDto mstKaryawanDto) {
+	public MstEmployeeDto findOne(MstEmployeeDto mstKaryawanDto) {
 		try {
-			MstKaryawanPk karyPk = new MstKaryawanPk();
+			MstEmployeePk karyPk = new MstEmployeePk();
 			karyPk.setId(mstKaryawanDto.getId());
-			MstKaryawanDto dto = null;
-			MstKaryawan karyawan = mstKaryawanDao.findOne(karyPk);
+			MstEmployeeDto dto = null;
+			MstEmployee karyawan = mstEmployeeDao.findOne(karyPk);
 			if(karyawan != null && karyawan.getId() != null){
-				dto = new MstKaryawanDto();
+				dto = new MstEmployeeDto();
 				dto.setCreatedDate(karyawan.getCreatedDate());
 				dto.setCreatedUser(karyawan.getCreatedUser());
 				dto.setDateOfBirth(karyawan.getDateOfBirth());
@@ -114,7 +123,7 @@ public class MstKaryawanServiceImpl implements MstKaryawanService{
 				dto.setDepartment(karyawan.getDepartment());
 				dto.setGender(karyawan.getGender());
 				dto.setId(karyawan.getId());
-				dto.setNamaKaryawan(karyawan.getNamaKaryawan());
+				dto.setEmployeeName(karyawan.getEmployeeName());
 				dto.setUpdatedDate(karyawan.getUpdatedDate());
 				dto.setUpdatedUser(karyawan.getUpdatedUser());
 				dto.setBirthPlace(karyawan.getBirthPlace());
@@ -127,12 +136,12 @@ public class MstKaryawanServiceImpl implements MstKaryawanService{
 	}
 
 	@Override
-	public void update(MstKaryawanDto mstKaryawanDto) {
+	public void update(MstEmployeeDto mstKaryawanDto) {
 		try {
-			MstKaryawanPk karyPk = new MstKaryawanPk();
+			MstEmployeePk karyPk = new MstEmployeePk();
 			karyPk.setId(mstKaryawanDto.getId());
 			
-			MstKaryawan karyawan = mstKaryawanDao.findOne(karyPk);
+			MstEmployee karyawan = mstEmployeeDao.findOne(karyPk);
 			if(karyawan != null && karyawan.getId() != null){
 				karyawan.setDeleted(mstKaryawanDto.getDeleted());
 				karyawan.setUpdatedDate(new Date());
@@ -140,9 +149,14 @@ public class MstKaryawanServiceImpl implements MstKaryawanService{
 				karyawan.setDateOfBirth(mstKaryawanDto.getDateOfBirth());
 				karyawan.setDepartment(mstKaryawanDto.getDepartment());
 				karyawan.setGender(mstKaryawanDto.getGender());
-				karyawan.setNamaKaryawan(mstKaryawanDto.getNamaKaryawan());
+				karyawan.setEmployeeName(mstKaryawanDto.getEmployeeName());
 				karyawan.setBirthPlace(mstKaryawanDto.getBirthPlace());
-				mstKaryawanDao.save(karyawan);
+				karyawan.setAddress(mstKaryawanDto.getAddress());
+				karyawan.setCityCode(mstKaryawanDto.getCityCode());
+				karyawan.setPostalCode(mstKaryawanDto.getPostalCode());
+				karyawan.setProvinceCode(mstKaryawanDto.getProvinceCode());
+
+				mstEmployeeDao.save(karyawan);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

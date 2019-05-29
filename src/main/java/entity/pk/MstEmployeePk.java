@@ -4,8 +4,10 @@ import java.io.Serializable;
 
 import javax.persistence.Embeddable;
 
+import entity.MstCity;
+
 @Embeddable
-public class MstKaryawanPk implements Serializable{
+public class MstEmployeePk implements Serializable{
 
 	/**
 	 * 
@@ -21,5 +23,5 @@ public class MstKaryawanPk implements Serializable{
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	
+
 }

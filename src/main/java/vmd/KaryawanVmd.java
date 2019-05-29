@@ -14,29 +14,29 @@ import org.zkoss.zk.ui.util.Clients;
 import org.zkoss.zul.Include;
 import org.zkoss.zul.Messagebox;
 
-import service.MstKaryawanService;
-import dto.MstKaryawanDto;
+import service.MstEmployeeService;
+import dto.MstEmployeeDto;
 
 @VariableResolver(org.zkoss.zkplus.spring.DelegatingVariableResolver.class)
 public class KaryawanVmd {
 	
-	private List<MstKaryawanDto> listKaryawan = new ArrayList<MstKaryawanDto>();
-	private MstKaryawanDto mstKaryawanDto = new MstKaryawanDto();
+	private List<MstEmployeeDto> listKaryawan = new ArrayList<MstEmployeeDto>();
+	private MstEmployeeDto mstEmployeeDto = new MstEmployeeDto();
 	private boolean readonly = false;
 	
 	@WireVariable
-	private MstKaryawanService mstKaryawanSvc;
+	private MstEmployeeService mstEmployeeSvc;
 	
 	@Init
 	public void load(){
-		listKaryawan = mstKaryawanSvc.findAll();
+		listKaryawan = mstEmployeeSvc.findAll();
 	}
 	
 	@Command(value="add")
 	public void add(){
-		MstKaryawanDto mstKaryawanDto = new MstKaryawanDto();
+		MstEmployeeDto mstEmployeeDto = new MstEmployeeDto();
 		
-		Sessions.getCurrent().setAttribute("objKaryawan", mstKaryawanDto);
+		Sessions.getCurrent().setAttribute("objKaryawan", mstEmployeeDto);
 		
 		Include inc = (Include) Executions.getCurrent().getDesktop().getPage("index").getFellow("mainInclude");
 		
@@ -46,11 +46,11 @@ public class KaryawanVmd {
 	@Command(value="edit")
 	public void edit(){
 		
-		if(mstKaryawanDto == null && mstKaryawanDto.getId() == null){
+		if(mstEmployeeDto == null && mstEmployeeDto.getId() == null){
 			Messagebox.show("Pilih data yang akan diedit");
 		}
 		else{
-			Sessions.getCurrent().setAttribute("objKaryawan", mstKaryawanDto);
+			Sessions.getCurrent().setAttribute("objKaryawan", mstEmployeeDto);
 			Include inc = (Include) Executions.getCurrent().getDesktop().getPage("index").getFellow("mainInclude");
 			inc.setSrc("/master/karyawan/karyawanedit.zul");
 		}
@@ -59,32 +59,32 @@ public class KaryawanVmd {
 	
 	@Command("delete")
 	public void delete(){
-		if(mstKaryawanDto == null && mstKaryawanDto.getId() == null){
+		if(mstEmployeeDto == null && mstEmployeeDto.getId() == null){
 			Messagebox.show("Pilih data yang akan di delete");
 		}
 		else{
-			mstKaryawanSvc.delete(mstKaryawanDto);
-			listKaryawan.remove(mstKaryawanDto);
+			mstEmployeeSvc.delete(mstEmployeeDto);
+			listKaryawan.remove(mstEmployeeDto);
 			BindUtils.postNotifyChange(null, null, KaryawanVmd.this, "listKaryawan");
 			Clients.showNotification("Data Berhasil di Delete", Clients.NOTIFICATION_TYPE_INFO, null, null, 500);
 		}
 	}
 
 	/* ----- Setter Getter ----- */
-	public List<MstKaryawanDto> getListKaryawan() {
+	public List<MstEmployeeDto> getListKaryawan() {
 		return listKaryawan;
 	}
 
-	public void setListKaryawan(List<MstKaryawanDto> listKaryawan) {
+	public void setListKaryawan(List<MstEmployeeDto> listKaryawan) {
 		this.listKaryawan = listKaryawan;
 	}
 
-	public MstKaryawanDto getMstKaryawanDto() {
-		return mstKaryawanDto;
+	public MstEmployeeDto getMstKaryawanDto() {
+		return mstEmployeeDto;
 	}
 
-	public void setMstKaryawanDto(MstKaryawanDto mstKaryawanDto) {
-		this.mstKaryawanDto = mstKaryawanDto;
+	public void setMstKaryawanDto(MstEmployeeDto mstKaryawanDto) {
+		this.mstEmployeeDto = mstKaryawanDto;
 	}
 
 	public boolean isReadonly() {
@@ -95,12 +95,12 @@ public class KaryawanVmd {
 		this.readonly = readonly;
 	}
 
-	public MstKaryawanService getMstKaryawanSvc() {
-		return mstKaryawanSvc;
+	public MstEmployeeService getMstKaryawanSvc() {
+		return mstEmployeeSvc;
 	}
 
-	public void setMstKaryawanSvc(MstKaryawanService mstKaryawanSvc) {
-		this.mstKaryawanSvc = mstKaryawanSvc;
+	public void setMstKaryawanSvc(MstEmployeeService mstKaryawanSvc) {
+		this.mstEmployeeSvc = mstKaryawanSvc;
 	}
 	
 }

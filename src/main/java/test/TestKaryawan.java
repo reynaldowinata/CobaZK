@@ -8,23 +8,23 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import dao.MstDepartmentDao;
 import dto.MstDepartmentDto;
-import dto.MstKaryawanDto;
+import dto.MstEmployeeDto;
 import entity.MstDepartment;
 import entity.enumcol.GenderEnum;
 import service.MstDepartmentService;
-import service.MstKaryawanService;
+import service.MstEmployeeService;
 
 public class TestKaryawan {
 
 	public static void main(String[] args) {
 		ApplicationContext context = new ClassPathXmlApplicationContext("/META-INF/spring/app-config.xml");
 		
-		MstKaryawanService mstKaryawanSvc = context.getBean(MstKaryawanService.class);
+		MstEmployeeService mstKaryawanSvc = context.getBean(MstEmployeeService.class);
 		MstDepartmentDao mstDepartmentDao = context.getBean(MstDepartmentDao.class);
 		
 		MstDepartment dept = mstDepartmentDao.findByDeptName("DIVISI FINANCE");
 		
-		MstKaryawanDto dto = new MstKaryawanDto();
+		MstEmployeeDto dto = new MstEmployeeDto();
 		dto.setCreatedDate(new Date());
 		dto.setCreatedUser("ADMIN");
 		dto.setDateOfBirth(new Date());
@@ -32,7 +32,7 @@ public class TestKaryawan {
 		dto.setDepartment(dept);
 		dto.setGender(GenderEnum.MALE);
 		dto.setId(3);
-		dto.setNamaKaryawan("Rizky");
+		dto.setEmployeeName("Rizky");
 		mstKaryawanSvc.save(dto);
 	}
 

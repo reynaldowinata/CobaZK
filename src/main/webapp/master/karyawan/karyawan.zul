@@ -17,7 +17,7 @@
 							 selectedItem="@bind(vm.mstKaryawanDto)">
 					<listhead>
 						<listheader label="Id Karyawan" sort="auto" />
-						<listheader label="Nama Karyawan" sort="auto" />
+						<listheader label="Employee Name" sort="auto" />
 						<listheader label="Date of Birth" sort="auto" />
 						<listheader label="Birth Place" />
 						<listheader label="Gender" sort="auto" />
@@ -26,7 +26,7 @@
 					<template name="model">
 						<listitem>
 							<listcell label="@load(each.id)" />
-							<listcell label="@load(each.namaKaryawan)" />
+							<listcell label="@load(each.employeeName)" />
 							<listcell label="@load(each.dateOfBirth)" />
 							<listcell label="@load(each.birthPlace)" />
 							<listcell label="@load(each.gender.description)" />

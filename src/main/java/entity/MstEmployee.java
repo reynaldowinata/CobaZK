@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -17,17 +18,12 @@ import javax.persistence.Table;
 
 import component.BaseEntity;
 import entity.enumcol.GenderEnum;
-import entity.pk.MstKaryawanPk;
+import entity.pk.MstEmployeePk;
 
 @Entity
-@Table(name="mst_karyawan")
-@IdClass(value=MstKaryawanPk.class)
-@NamedQueries({
-	@NamedQuery(
-			name="MstKaryawan.findById", 
-			query="SELECT p FROM MstKaryawan p WHERE p.id = :id")
-})
-public class MstKaryawan extends BaseEntity implements Serializable{
+@Table(name="mst_employee")
+@IdClass(value=MstEmployeePk.class)
+public class MstEmployee extends BaseEntity implements Serializable{
 
 	private static final long serialVersionUID = 209321702337294118L;
 
@@ -35,8 +31,8 @@ public class MstKaryawan extends BaseEntity implements Serializable{
 	@Column(name="id")
 	private Integer id;
 	
-	@Column(name="nama_karyawan")
-	private String namaKaryawan;
+	@Column(name="employee_name")
+	private String employeeName;
 	
 	@Column(name="date_of_birth")
 	private Date dateOfBirth;
@@ -49,7 +45,18 @@ public class MstKaryawan extends BaseEntity implements Serializable{
 	
 	@Column(name="birth_place")
 	private String birthPlace;
-
+	
+	@Column(name="city_code")
+	private String cityCode;
+	
+	@Column(name="province_code")
+	private String provinceCode;
+	
+	@Column(name="address")
+	private String address;
+	
+	@Column(name="postal_code")
+	private String postalCode;
 	
 	public void setId(Integer id) {
 		this.id = id;
@@ -58,14 +65,6 @@ public class MstKaryawan extends BaseEntity implements Serializable{
 //	@Override
 	public Integer getId() {
 		return this.id;
-	}
-
-	public String getNamaKaryawan() {
-		return namaKaryawan;
-	}
-
-	public void setNamaKaryawan(String namaKaryawan) {
-		this.namaKaryawan = namaKaryawan;
 	}
 
 	public Date getDateOfBirth() {
@@ -99,7 +98,45 @@ public class MstKaryawan extends BaseEntity implements Serializable{
 	public void setBirthPlace(String birthPlace) {
 		this.birthPlace = birthPlace;
 	}
-	
-	
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getPostalCode() {
+		return postalCode;
+	}
+
+	public void setPostalCode(String postalCode) {
+		this.postalCode = postalCode;
+	}
+
+	public String getEmployeeName() {
+		return employeeName;
+	}
+
+	public void setEmployeeName(String employeeName) {
+		this.employeeName = employeeName;
+	}
+
+	public String getCityCode() {
+		return cityCode;
+	}
+
+	public void setCityCode(String cityCode) {
+		this.cityCode = cityCode;
+	}
+
+	public String getProvinceCode() {
+		return provinceCode;
+	}
+
+	public void setProvinceCode(String provinceCode) {
+		this.provinceCode = provinceCode;
+	}
 
 }
