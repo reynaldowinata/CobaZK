@@ -7,5 +7,5 @@
 	<include id="mainInclude" mode="instant" self="@define(mainContent)"
 	apply="org.zkoss.bind.BindComposer"
 	viewModel="@id('vm') @init('vmd.NavigationVmd')"
-	src="@bind(vm.includeSrc)"/>
+	src ="@bind(vm.includeSrc)"/>
 </zk>

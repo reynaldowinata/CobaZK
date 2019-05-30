@@ -22,20 +22,20 @@
 		</property>
 	</bean>
 	
-	<!-- <bean id="dataSource"
+	 <bean id="dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="org.postgresql.Driver" />
-		<property name="url" value="jdbc:postgresql://localhost:5432/togtrainingzk" />
+		<property name="url" value="jdbc:postgresql://localhost:5432/belajarhibernatedb" />
 		<property name="username" value="postgres" />
-		<property name="password" value="qwertyuiop" />
-	</bean> -->
-	<bean id="dataSource"
+		<property name="password" value="asdasd" />
+	</bean> 
+	<!--  <bean id="dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="com.microsoft.sqlserver.jdbc.SQLServerDriver" />
 		<property name="url" value="jdbc:sqlserver://localhost;databaseName=belajarhibernatedb" />
 		<property name="username" value="sa" />
 		<property name="password" value="Diginovasi" />
-	</bean>
+	</bean> --> 
 	
 	<!-- JPA Entity Manager Factory definition -->
 	<!-- Use hibernate as JPA Implementation -->
